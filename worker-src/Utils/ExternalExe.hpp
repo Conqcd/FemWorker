@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Core/core.hpp"
 #include <string>
 
