@@ -5,12 +5,14 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <iostream>
 
 namespace Rengin
 {
     
 LinuxExternalExe::LinuxExternalExe()
 {
+
 }
 
 LinuxExternalExe::~LinuxExternalExe()
@@ -35,11 +37,12 @@ void LinuxExternalExe::CreateProcess(const std::string &exePath,const std::strin
         RE_CORE_ERROR("Can not open the process");
         return;
 	case 0:
-		execl(exePath.c_str(), Args.c_str(), 0);
+		execlp(exePath.c_str(), Args.c_str(), 0);
 		break;
 	default:
 		break;
     }
+    // std::cout << "ok" << std::endl;
     hasProcess = true;
 }
 
