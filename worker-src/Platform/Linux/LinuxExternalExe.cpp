@@ -39,7 +39,8 @@ void LinuxExternalExe::CreateProcess(const std::string &exePath,const std::strin
         std::cout << "fail Create" << std::endl;
         return;
 	case 0:
-		idd = execlp(exePath.c_str(), Args.c_str(), 0);
+		idd = execl(exePath.c_str(), Args.c_str(), 0);
+		// idd = execlp(exePath.c_str(), Args.c_str(), 0);
         std::cout << "okCreate" << idd << errno << std::endl;
 		break;
 	default:
