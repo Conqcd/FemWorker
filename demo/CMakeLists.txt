@@ -1,0 +1,1 @@
+add_executable(minie mini.cpp)

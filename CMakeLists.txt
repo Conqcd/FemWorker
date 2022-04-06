@@ -4,3 +4,4 @@ set(CMAKE_CXX_STANDARD 17)
 project(FemWorker)
 
 add_subdirectory(worker-src)
+add_subdirectory(demo)

@@ -31,18 +31,22 @@ Ref<ExternalExe> ExternalExe::Create()
 void LinuxExternalExe::CreateProcess(const std::string &exePath,const std::string& Args)
 {
     m_Pid = fork();
+    int idd;
 	switch(m_Pid)
 	{
 	case -1:
         RE_CORE_ERROR("Can not open the process");
+        std::cout << "fail Create" << std::endl;
         return;
 	case 0:
-		execlp(exePath.c_str(), Args.c_str(), 0);
+		idd = execlp(exePath.c_str(), Args.c_str(), 0);
+        std::cout << "okCreate" << idd << errno << std::endl;
 		break;
 	default:
+        // std::cout << "OtherCreate " << m_Pid << std::endl;
 		break;
     }
-    // std::cout << "ok" << std::endl;
+    std::cout << errno << std::endl;
     hasProcess = true;
 }
 
