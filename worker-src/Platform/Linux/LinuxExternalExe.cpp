@@ -17,10 +17,7 @@ LinuxExternalExe::LinuxExternalExe()
 
 LinuxExternalExe::~LinuxExternalExe()
 {
-    if(hasProcess)
-    {
-        Terminate();
-    }
+    // Terminate();
 }
 
 Ref<ExternalExe> ExternalExe::Create()
@@ -30,7 +27,7 @@ Ref<ExternalExe> ExternalExe::Create()
 
 void LinuxExternalExe::CreateProcess(const std::string &exePath,const std::string& Args)
 {
-    m_Pid = fork();
+    m_Pid = vfork();
     int idd;
 	switch(m_Pid)
 	{
@@ -39,16 +36,19 @@ void LinuxExternalExe::CreateProcess(const std::string &exePath,const std::strin
         std::cout << "fail Create" << std::endl;
         return;
 	case 0:
-		idd = execl(exePath.c_str(), Args.c_str(), 0);
+		// idd = execl(exePath.c_str(), Args.c_str(), 0);
+        std::cout << "Child Create " << m_Pid << " " << errno << std::endl;
+        hasProcess = false;
 		// idd = execlp(exePath.c_str(), Args.c_str(), 0);
-        std::cout << "okCreate" << idd << errno << std::endl;
+        idd = execlp(exePath.c_str(),"-n 4","./femsolver","temp/vo.txt",0);
 		break;
 	default:
-        // std::cout << "OtherCreate " << m_Pid << std::endl;
+		// idd = execl(exePath.c_str(), Args.c_str(), 0);
+        std::cout << "Father " << m_Pid << std::endl;
+        hasProcess = true;
 		break;
     }
-    std::cout << errno << std::endl;
-    hasProcess = true;
+    // std::cout << errno << std::endl;
 }
 
 void LinuxExternalExe::WaitProcess()
